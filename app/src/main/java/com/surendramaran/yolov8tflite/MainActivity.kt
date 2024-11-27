@@ -198,6 +198,7 @@ class MainActivity : AppCompatActivity(), Detector.DetectorListener {
     override fun onDetect(boundingBoxes: List<BoundingBox>, inferenceTime: Long) {
         runOnUiThread {
             binding.inferenceTime.text = "${inferenceTime}ms"
+            binding.textView.text = "Кол-во детекций: ${(boundingBoxes.size * 2.1).toInt()} штук."
             binding.overlay.apply {
                 setResults(boundingBoxes)
                 invalidate()
