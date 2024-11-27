@@ -1,6 +1,7 @@
 package com.surendramaran.yolov8tflite
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Matrix
@@ -38,9 +39,17 @@ class MainActivity : AppCompatActivity(), Detector.DetectorListener {
     private lateinit var cameraExecutor: ExecutorService
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.btnRecord.setOnClickListener {
+            val intent = Intent(this, RecordActivity::class.java)
+            startActivity(intent)
+        }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
@@ -198,7 +207,7 @@ class MainActivity : AppCompatActivity(), Detector.DetectorListener {
     override fun onDetect(boundingBoxes: List<BoundingBox>, inferenceTime: Long) {
         runOnUiThread {
             binding.inferenceTime.text = "${inferenceTime}ms"
-            binding.textView.text = "Кол-во детекций: ${(boundingBoxes.size * 2.1).toInt()} штук."
+            binding.textView.text = "Кол-во зёрен: ${(boundingBoxes.size * 2.1).toInt()} штук."
             binding.overlay.apply {
                 setResults(boundingBoxes)
                 invalidate()
